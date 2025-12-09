@@ -41,10 +41,10 @@ def generate_vocab_pdf(vocab_pairs, hide_mode='korean', student_name=None):
     # 한글 폰트 등록 (fpdf2는 TTF 폰트를 직접 사용)
     font_path = get_korean_font_path()
     pdf.add_font("KoreanFont", fname=font_path)
-    pdf.set_font("KoreanFont", size=16)
+    pdf.set_font("KoreanFont", size=14)
     
     # 제목
-    pdf.cell(0, 10, "영단어 시험지", ln=True, align='C')
+    pdf.cell(0, 10, "영단어 연습지", ln=True, align='C')
     pdf.ln(2)
 
     # 학생 이름 / 날짜 행
@@ -77,10 +77,10 @@ def generate_vocab_pdf(vocab_pairs, hide_mode='korean', student_name=None):
 
     # ===== 정답지 페이지 =====
     pdf.add_page()
-    pdf.set_font("KoreanFont", size=16)
+    pdf.set_font("KoreanFont", size=14)
     pdf.cell(0, 10, "정답지", ln=True, align='C')
     pdf.ln(4)
-    pdf.set_font("KoreanFont", size=11)
+    pdf.set_font("KoreanFont", size=9)
 
     pdf.cell(20, 10, "번호", 1, 0, 'C', fill=True)
     pdf.cell(col_w - 20, 10, "영단어", 1, 0, 'C', fill=True)
