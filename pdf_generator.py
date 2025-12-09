@@ -78,7 +78,7 @@ def generate_vocab_pdf(vocab_pairs, hide_mode='korean', student_name=None):
     # ===== 정답지 페이지 =====
     pdf.add_page()
     pdf.set_font("KoreanFont", size=14)
-    pdf.cell(0, 10, "정답지", ln=True, align='C')
+    pdf.cell(0, 10, "영단어 정답지", ln=True, align='C')
     pdf.ln(4)
     pdf.set_font("KoreanFont", size=9)
 
