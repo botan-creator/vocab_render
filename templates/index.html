@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>영단어 시험지 생성기</title>
+<link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+  <div class="container">
+    <h1>영단어 시험지 생성기</h1>
+
+    <form action="/generate" method="post">
+      <div class="row">
+        <label>이름 (선택)</label>
+        <input type="text" name="student_name" placeholder="예: 김철수">
+      </div>
+
+      <div class="row">
+        <label>숨기기 모드</label>
+        <select name="hide_mode">
+          <option value="korean">한글 숨기기 (영어 표시)</option>
+          <option value="english">영어 숨기기 (한글 표시)</option>
+        </select>
+      </div>
+
+      <div class="hint">한 줄에 영어와 뜻을 채우거나 비워둘 수 있습니다. (총 30줄)</div>
+
+      <div class="table-headers">
+        <div class="col num">No</div>
+        <div class="col eng">영어 단어</div>
+        <div class="col kor">뜻</div>
+      </div>
+
+      <div id="inputs">
+        <!-- 입력 칸이 스크립트로 생성됩니다 -->
+      </div>
+
+      <button type="submit" class="btn">📄 PDF 생성</button>
+    </form>
+
+    <div class="foot">다운로드 후 파일앱에서 열기/인쇄 가능합니다.</div>
+  </div>
+
+<script>
+const container = document.getElementById("inputs");
+for (let i = 1; i <= 30; i++) {
+  const row = document.createElement("div");
+  row.className = "input-row";
+  row.innerHTML = `
+    <div class="col num">${i}</div>
+    <div class="col eng"><input name="english[]" placeholder="영어 ${i}"></div>
+    <div class="col kor"><input name="korean[]" placeholder="뜻 ${i}"></div>
+  `;
+  container.appendChild(row);
+}
+</script>
+</body>
+</html>
