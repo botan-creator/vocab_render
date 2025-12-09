@@ -55,41 +55,43 @@ def generate_vocab_pdf(vocab_pairs, hide_mode='korean', student_name=None):
     pdf.ln(6)
 
     # 표 머리 (문제지)
-    pdf.set_font("KoreanFont", size=11)
+    pdf.set_font("KoreanFont", size=10)
     col_w = (pdf.w - 2 * pdf.l_margin) / 3.0  # 3열: 번호 / 컬럼A / 컬럼B
     # 헤더 스타일
     pdf.set_fill_color(230, 230, 230)
-    pdf.cell(20, 10, "번호", 1, 0, 'C', fill=True)
-    pdf.cell(col_w - 20, 10, "영단어", 1, 0, 'C', fill=True)
-    pdf.cell(col_w - 20, 10, "뜻", 1, 1, 'C', fill=True)
+    pdf.cell(20, 8, "번호", 1, 0, 'C', fill=True)
+    pdf.cell(col_w - 20, 8, "영단어", 1, 0, 'C', fill=True)
+    pdf.cell(col_w - 20, 8, "뜻", 1, 1, 'C', fill=True)
 
     # 문제지 행들
+    pdf.set_font("KoreanFont", size=9)
     for idx, (eng, kor) in enumerate(vocab_pairs, start=1):
-        pdf.cell(20, 9, str(idx), 1, 0, 'C')
+        pdf.cell(20, 7, str(idx), 1, 0, 'C')
         if hide_mode == 'korean':
             # 영어 표시, 뜻 빈칸
-            pdf.cell(col_w - 20, 9, eng if eng else "", 1, 0)
-            pdf.cell(col_w - 20, 9, "", 1, 1)
+            pdf.cell(col_w - 20, 7, eng if eng else "", 1, 0)
+            pdf.cell(col_w - 20, 7, "", 1, 1)
         else:
             # 영어 빈칸, 뜻 표시
-            pdf.cell(col_w - 20, 9, "", 1, 0)
-            pdf.cell(col_w - 20, 9, kor if kor else "", 1, 1)
+            pdf.cell(col_w - 20, 7, "", 1, 0)
+            pdf.cell(col_w - 20, 7, kor if kor else "", 1, 1)
 
     # ===== 정답지 페이지 =====
     pdf.add_page()
     pdf.set_font("KoreanFont", size=14)
     pdf.cell(0, 10, "영단어 정답지", ln=True, align='C')
-    pdf.ln(4)
+    pdf.ln(2)
+    pdf.set_font("KoreanFont", size=10)
+
+    pdf.cell(20, 8, "번호", 1, 0, 'C', fill=True)
+    pdf.cell(col_w - 20, 8, "영단어", 1, 0, 'C', fill=True)
+    pdf.cell(col_w - 20, 8, "뜻", 1, 1, 'C', fill=True)
+
     pdf.set_font("KoreanFont", size=9)
-
-    pdf.cell(20, 10, "번호", 1, 0, 'C', fill=True)
-    pdf.cell(col_w - 20, 10, "영단어", 1, 0, 'C', fill=True)
-    pdf.cell(col_w - 20, 10, "뜻", 1, 1, 'C', fill=True)
-
     for idx, (eng, kor) in enumerate(vocab_pairs, start=1):
-        pdf.cell(20, 9, str(idx), 1, 0, 'C')
-        pdf.cell(col_w - 20, 9, eng if eng else "", 1, 0)
-        pdf.cell(col_w - 20, 9, kor if kor else "", 1, 1)
+        pdf.cell(20, 7, str(idx), 1, 0, 'C')
+        pdf.cell(col_w - 20, 7, eng if eng else "", 1, 0)
+        pdf.cell(col_w - 20, 7, kor if kor else "", 1, 1)
 
     pdf_bytes = pdf.output(dest='S')
     buffer = io.BytesIO(pdf_bytes)
