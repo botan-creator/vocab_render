@@ -1,5 +1,5 @@
 from flask import Flask, render_template, request, send_file
-from pdf_generator import generate_vocab_pdf
+from pdf_generator import generate_vocab_pdf, get_korean_font_path
 import random
 import os
 
@@ -29,10 +29,18 @@ def generate():
                      download_name="vocab_test.pdf",
                      mimetype="application/pdf")
 
+@app.route("/health")
+def health():
+    """Health endpoint to verify important runtime files (like the Korean font)."""
+    try:
+        font_path = get_korean_font_path()
+        exists = os.path.exists(font_path)
+        return {"font_found": True, "font_path": font_path, "font_exists_on_fs": exists}
+    except Exception as e:
+        return {"font_found": False, "error": str(e)}
+
+
 if __name__ == "__main__":
     # Use PORT env var when available (Render sets $PORT)
     port = int(os.environ.get("PORT", 5000))
     app.run(host="0.0.0.0", port=port)
-
-if __name__ == "__main__":
-    app.run(host="0.0.0.0", port=5000)
